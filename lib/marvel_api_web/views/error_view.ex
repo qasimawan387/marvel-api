@@ -1,16 +1,16 @@
 defmodule MarvelApiWeb.ErrorView do
   use MarvelApiWeb, :view
 
-  # If you want to customize a particular status code
-  # for a certain format, you may uncomment below.
-  # def render("500.html", _assigns) do
-  #   "Internal Server Error"
-  # end
+  def render("error.json", %{code: code, message: message}) do
+    %{error: %{code: code, message: message}}
+  end
 
-  # By default, Phoenix returns the status message from
-  # the template name. For example, "404.html" becomes
-  # "Not Found".
-  def template_not_found(template, _assigns) do
-    Phoenix.Controller.status_message_from_template(template)
+  def render("errors.json", %{code: code, message: message, changeset: changeset}) do
+    %{error: %{code: code, message: message, errors: translate_errors(changeset)}}
+  end
+
+  def translate_errors(changeset) do
+    changeset
+    |> Ecto.Changeset.traverse_errors(&translate_error/1)
   end
 end

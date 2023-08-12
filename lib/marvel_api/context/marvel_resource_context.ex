@@ -4,21 +4,23 @@ defmodule MarvelApi.Context.MarvelResourceContext do
   @doc """
   This function is used to get the resource from Marvel Api accroding to give resource
   """
-  @spec get_resource_from_marvel_api(String.t()) :: list
-  def get_resource_from_marvel_api(resource) do
-    {:ok, response} =
-      resource
-      |> MarvelApiUtils.process_url()
-      |> HTTPoison.get()
+  @spec get_resource_from_marvel_api(String.t(), map()) ::
+          {:ok, list()} | {:error, HTTPoison.Error.t()}
+  def get_resource_from_marvel_api(resource, params) do
+    resource
+    |> MarvelApiUtils.process_url(params)
+    |> HTTPoison.get()
+    |> case do
+      {:ok, response} ->
+        {:ok, json_data} = Jason.decode(response.body)
 
-    {:ok, json_data} = Jason.decode(response.body)
+        records = process_comics(json_data)
+        {:ok, records}
 
-    process_comics(json_data)
+      error ->
+        error
+    end
   end
 
-  defp process_comics(%{"data" => %{"results" => comics}}) do
-    Enum.map(comics, fn comic ->
-      comic |> Map.take(["comics", "id", "name", "description"])
-    end)
-  end
+  defp process_comics(%{"data" => data}), do: data
 end

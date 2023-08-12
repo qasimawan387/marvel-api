@@ -24,6 +24,7 @@ defmodule MarvelApiWeb do
       import Plug.Conn
       import MarvelApiWeb.Gettext
       alias MarvelApiWeb.Router.Helpers, as: Routes
+      action_fallback(MarvelApiWeb.FallbackController)
     end
   end
 

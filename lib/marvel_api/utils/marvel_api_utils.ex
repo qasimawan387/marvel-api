@@ -3,15 +3,20 @@ defmodule MarvelApi.Utils.MarvelApiUtils do
   @api_key "0bce9a6c2932660f6d7cf8e2cc974ff3"
   @private_key "ea924cd502316104fe03fabf5da5f885321a57df"
   @ts "1"
+  @default_limit 20
+  @default_offset 0
 
   @doc """
   This function is used to get the process_url according to resource
   """
-  @spec process_url(String.t()) :: String.t()
-  def process_url(resource) do
+  @spec process_url(String.t(), map()) :: String.t()
+  def process_url(resource, params) do
+    limit = params["limit"] || @default_limit
+    offset = params["offset"] || @default_offset
     hash = get_hash() |> encypt_hash()
 
-    @endpoint <> "#{resource}?ts=#{@ts}&apikey=#{@api_key}&hash=#{hash}"
+    @endpoint <>
+      "#{resource}?limit=#{limit}&offset=#{offset}&ts=#{@ts}&apikey=#{@api_key}&hash=#{hash}"
   end
 
   defp get_hash do
