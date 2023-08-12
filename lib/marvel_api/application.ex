@@ -14,9 +14,10 @@ defmodule MarvelApi.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: MarvelApi.PubSub},
       # Start the Endpoint (http/https)
-      MarvelApiWeb.Endpoint
+      MarvelApiWeb.Endpoint,
       # Start a worker by calling: MarvelApi.Worker.start_link(arg)
       # {MarvelApi.Worker, arg}
+      Supervisor.child_spec({Cachex, name: :marvel_api_cache}, id: :marvel_api_cache)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

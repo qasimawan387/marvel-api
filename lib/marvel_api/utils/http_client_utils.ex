@@ -1,4 +1,4 @@
-defmodule MarvelApi.Utils.MarvelApiUtils do
+defmodule MarvelApi.Utils.HttpClientUtils do
   @endpoint "https://gateway.marvel.com/v1/public/"
   @api_key "0bce9a6c2932660f6d7cf8e2cc974ff3"
   @private_key "ea924cd502316104fe03fabf5da5f885321a57df"

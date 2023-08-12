@@ -46,7 +46,8 @@ defmodule MarvelApi.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 2.0"},
-      {:mock, "~> 0.3.7", only: :test}
+      {:mock, "~> 0.3.7", only: :test},
+      {:cachex, "~> 3.0"}
     ]
   end
 
