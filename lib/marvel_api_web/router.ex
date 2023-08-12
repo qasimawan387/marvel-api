@@ -16,7 +16,7 @@ defmodule MarvelApiWeb.Router do
   scope "/", MarvelApiWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/get_characters", MarvelResourceController, :get_characters
   end
 
   # Other scopes may use custom stacks.
